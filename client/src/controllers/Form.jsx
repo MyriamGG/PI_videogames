@@ -74,6 +74,7 @@ const Form = (props) => {
         event.preventDefault();//para prevenir o cambiar el evento del formulario
         dispatch(crearVideos(form));
         alert ('Video game create successfuly! ✓')
+        handleReset();
         history.push("/home");
     }
 
@@ -81,6 +82,7 @@ const Form = (props) => {
         event.preventDefault();//para prevenir o cambiar el evento del formulario
         dispatch(putVideoGame(form, props.ID));
         alert ('Video game updated successfuly! ✓')
+        handleReset();
         history.push("/home");
     }
 
@@ -405,8 +407,8 @@ const Form = (props) => {
                     </form>
 
                     <Link to="/home">
-                        <button  type= "submit" onClick={submitHandler} disabled={!form.name || !form.imagen || !form.description || form.platforms.length === 0 || form.genres.length === 0 || error}>CREAR</button>
-                        <button  type="submit" onClick={submitHandlerActual}>Actualizar</button>
+                        <button  type= "submit" onClick={submitHandler} hidden={props.ID? true : false} disabled={!form.name || !form.imagen || !form.description || form.platforms.length === 0 || form.genres.length === 0 || error}>CREAR</button>
+                        <button  type="submit" onClick={submitHandlerActual} hidden={props.ID? false : true} disabled={(!form.name && !form.imagen && !form.description && form.platforms.length === 0 && form.genres.length === 0) || error}>Actualizar</button>
                     </Link> 
 
                 </div>

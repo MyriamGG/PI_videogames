@@ -1,4 +1,5 @@
 import React from "react";
+import {connect} from "react-redux";
 import {useEffect, useState} from "react";
 import {Link , useParams, useHistory} from 'react-router-dom';
 import { getVideoDetail, delVideoGame } from "../redux/actions";
@@ -7,7 +8,7 @@ import { cleanDetail } from "../redux/actions";
 import Form from "../controllers/Form";
 
 const VideoDetail = () => { 
-    const history = useHistory;
+    const history = useHistory();
     const dispatch = useDispatch();
     const { id } = useParams();
 
@@ -15,8 +16,7 @@ const VideoDetail = () => {
 
     useEffect(() => {
         dispatch(getVideoDetail(id));
-        dispatch(delVideoGame(id));
-
+  
         return function(){
             dispatch(cleanDetail());
         };
@@ -31,7 +31,7 @@ const VideoDetail = () => {
         event.preventDefault();//para prevenir o cambiar el evento del formulario
         dispatch(delVideoGame(id));
         alert ('Video game deleted successfuly! ✓')
-        history.push("/home");
+        handleRegreso();
     }
 
     return(
@@ -51,17 +51,22 @@ const VideoDetail = () => {
                 <p className="texto_detail">platforms: </p> <p className="margen_detail">{myVideo.platforms}</p>
                 <p className="texto_detail">genres: </p> <p className="margen_detail">{myVideo.genres?myVideo.genres.map(genre => genre.name):''}</p>
                 </div>
-                <div className="ul">
-                <button onClick={() => setMostrarComponente(!mostrarComponente)} hidden= {id.length > 10? false: true} >
-                    {!mostrarComponente ? `Ocultar` : `Modificar Datos`}  
-                </button>
-                <div>
-                    {!mostrarComponente && <Form ID = {id}/>}
-                </div>
-                <button onClick={handleDelete} hidden={id.length > 10? false : true}>Borrar VideoGame</button>
-                </div>
+                <div className="row">
+                    <button onClick={() => setMostrarComponente(!mostrarComponente)} hidden= {id.length > 10? false: true} >
+                        {!mostrarComponente ? `Ocultar` : `Modificar Datos`}  
+                    </button>
+                    <button onClick={handleDelete} hidden={id.length > 10? false : true}>Borrar VideoGame</button>
+                </div>    
+                    <div>
+                        {!mostrarComponente && <Form ID={id}/>}
+                    </div>
             </div>
         </>
     )
 }
-export default VideoDetail;
+const mapDispatchToProp = (dispatch) => {
+    return {
+        delVideoGame: (id) => dispatch(delVideoGame(id)),
+    }
+}
+export default connect(null, mapDispatchToProp)(VideoDetail);

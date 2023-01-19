@@ -52,6 +52,7 @@ export const crearVideos = (video) => {
 
 export const putVideoGame = (video, ID) => {
     try{
+        console.log("ID putVideoGame", ID);
         return async function() {
             let json = await axios.put(`http://localhost:3001/videogame/actuality/${ID}`, video)
             return json;

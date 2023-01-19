@@ -1,6 +1,5 @@
 import './App.css';
 import LandingPage from './controllers/LandingPage';
-// import NavBar from './controllers/NavBar';
 import Get_All_Videos from './controllers/Get_All_Videos';
 import VideoDetail from './controllers/VideoDetail';
 import Form from './controllers/Form';

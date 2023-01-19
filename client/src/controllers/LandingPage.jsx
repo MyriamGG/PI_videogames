@@ -9,7 +9,7 @@ export default function LandingPage() {
             <img className= "imagen_fondo" src="https://cdn.pixabay.com/photo/2017/11/06/12/20/controller-2923485__340.png" alt= "Imagen de VideoGame"/>
             <br/>
             <Link to="App.css" rel="stylesheet"></Link>
-            <Link className= "linkVideo" to="/home">START</Link>
+            <Link className= "linkVideo" to="/home">INGRESAR</Link>
         </div>
     )
 }
