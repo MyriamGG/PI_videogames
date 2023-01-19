@@ -7,9 +7,9 @@ const PUT_ID_VIDEOGAME = async (req, res) =>{
         let {ID} = req.params;
 
         let {name, imagen, description, released, rating, platforms, genres} = req.body;
-        console.log(platforms, genres)
-        if( !name && !imagen && !description && !released && !rating && !platforms) throw new Error("Faltan Datos");
-        if(typeof rating !== "number") throw new Error("Rating debe ser un valor numerico");
+
+        if( !name && !imagen && !description && !released && !rating && !platforms && !genres) throw new Error("Faltan Datos");
+        if(rating && typeof rating !== "number") throw new Error("Rating debe ser un valor numerico");
         
         const buscoVG = await Videogame.findByPk(ID);
         if (buscoVG){
@@ -20,11 +20,11 @@ const PUT_ID_VIDEOGAME = async (req, res) =>{
           if (!rating) rating = buscoVG.rating;
           if (platforms.length === 0) platforms = buscoVG.platforms;
 
-          console.log(platforms)
+          const gamesActualizado = await Videogame.update({name, imagen, description, released, rating, platforms}, 
+                                                          {where: {ID}});
 
-          await Videogame.update({name, imagen, description, released, rating, platforms}, 
-            {where: {ID}});
-          if (genres.length !== 0) await gamesActualizado.addGenres(genres);
+          // if (genres.length !== 0) {await gamesActualizado.addGenres(genres);}
+
         res.status(200).json({ success: "actualizado" });
           }
          else throw new Error("No existe videogame");

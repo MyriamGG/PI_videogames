@@ -51,6 +51,7 @@ const initialError = {
 let generoArr = [];
 
 const Form = (props) => {
+    const id = props.ID;
 
     const [form, setForm] = useState(initialForm);
     const [genres, setGenres] = useState(initialGenre);
@@ -80,7 +81,7 @@ const Form = (props) => {
 
     const submitHandlerActual = (event) => {
         event.preventDefault();//para prevenir o cambiar el evento del formulario
-        dispatch(putVideoGame(form, props.ID));
+        dispatch(putVideoGame(form, id));
         alert ('Video game updated successfuly! ✓')
         handleReset();
         history.push("/home");
@@ -427,7 +428,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProp = (dispatch) => {
     return {
         crearVideos: () => dispatch(crearVideos()),
-        putVideoGame: () => dispatch(putVideoGame())
+        putVideoGame: (id) => dispatch(putVideoGame(id))
     }
 }
 
